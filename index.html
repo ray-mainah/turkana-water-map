@@ -1,0 +1,1821 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_71750e3d3de51167c503799d60cfabc5 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+    <script src="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/ljagis/leaflet-measure@2.1.7/dist/leaflet-measure.min.css"/>
+</head>
+<body>
+    
+    
+<div style='position: fixed;
+     bottom: 50px; left: 50px; width: 240px; height: 180px;
+     border:2px solid grey; z-index:9999; font-size:14px;
+     background-color:white; padding: 10px;'>
+     <b>Fluoride Levels (mg/L)</b><br>
+     <i style='background:green; width:10px; height:10px; display:inline-block'></i>&nbsp; Safe (&lt; 1.5)<br>
+     <i style='background:orange; width:10px; height:10px; display:inline-block'></i>&nbsp; Risky (1.5 – 4)<br>
+     <i style='background:red; width:10px; height:10px; display:inline-block'></i>&nbsp; Unsafe (&gt; 4)<br>
+     <br>
+     <b>pH Levels</b><br>
+     <i style='background:green; width:10px; height:10px; display:inline-block'></i>&nbsp; Safe (6.5 – 8.5)<br>
+     <i style='background:red; width:10px; height:10px; display:inline-block'></i>&nbsp; Unsafe (&lt; 6.5 or &gt; 8.5)<br>
+</div>
+'<a href="Turkana_dry.csv" download style="color:blue;">Download CSV Data</a><br>'
+    
+<div style="position: fixed; top: 10px; left: 50%; transform: translateX(-50%);
+     z-index:9999; background-color:white; padding:10px; border:2px solid grey;
+     font-size:20px; font-weight:bold;">
+     Turkana County Water Quality Map (Fluoride & pH)
+</div>
+    
+            <div class="folium-map" id="map_71750e3d3de51167c503799d60cfabc5" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_71750e3d3de51167c503799d60cfabc5 = L.map(
+                "map_71750e3d3de51167c503799d60cfabc5",
+                {
+                    center: [3.2, 35.6],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 7.2,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_414c62c4352583139281f841141e2de1 = L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {"attribution": "Data by \u0026copy; \u003ca target=\"_blank\" href=\"http://openstreetmap.org\"\u003eOpenStreetMap\u003c/a\u003e, under \u003ca target=\"_blank\" href=\"http://www.openstreetmap.org/copyright\"\u003eODbL\u003c/a\u003e.", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        function geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_styler(feature) {
+            switch(feature.properties.GID_1) {
+                default:
+                    return {"color": "black", "fillColor": "#A67B5B", "fillOpacity": 0.6, "weight": 2};
+            }
+        }
+
+        function geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_6153519eaa6e3f746b5db97a8c7dd6a5 = L.geoJson(null, {
+                onEachFeature: geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_onEachFeature,
+            
+                style: geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_styler,
+        });
+
+        function geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_add (data) {
+            geo_json_6153519eaa6e3f746b5db97a8c7dd6a5
+                .addData(data)
+                .addTo(map_71750e3d3de51167c503799d60cfabc5);
+        }
+            geo_json_6153519eaa6e3f746b5db97a8c7dd6a5_add({"crs": {"properties": {"name": "urn:ogc:def:crs:OGC:1.3:CRS84"}, "type": "name"}, "features": [{"geometry": {"coordinates": [[[[36.3931, 0.9168], [36.3939, 0.9248], [36.388, 0.931], [36.388, 0.9451], [36.3906, 0.9462], [36.3889, 0.9494], [36.3843, 0.9515], [36.3842, 0.9551], [36.3787, 0.9554], [36.3753, 0.9572], [36.3699, 0.9559], [36.3654, 0.959], [36.3638, 0.9642], [36.3515, 0.9667], [36.3477, 0.9752], [36.3469, 0.9913], [36.3426, 0.9937], [36.3422, 0.9983], [36.3173, 0.9955], [36.1732, 1.1752], [36.0973, 1.1732], [36.0961, 1.171], [35.7855, 1.6559], [35.786, 1.6615], [35.7817, 1.6683], [35.771, 1.6705], [35.762, 1.6746], [35.7588, 1.6779], [35.7532, 1.6784], [35.7509, 1.6804], [35.7414, 1.6833], [35.7386, 1.683], [35.7254, 1.6929], [35.7198, 1.6944], [35.7188, 1.6973], [35.7021, 1.711], [35.6851, 1.72], [35.679, 1.7255], [35.6736, 1.7272], [35.6694, 1.7352], [35.6577, 1.7378], [35.6485, 1.7461], [35.6407, 1.7466], [35.6384, 1.7493], [35.6289, 1.751], [35.6203, 1.7547], [35.6185, 1.7538], [35.6135, 1.7559], [35.6084, 1.7554], [35.6076, 1.7574], [35.6037, 1.7586], [35.5984, 1.7666], [35.5956, 1.7666], [35.5938, 1.7685], [35.5858, 1.7643], [35.5771, 1.765], [35.5744, 1.7668], [35.5695, 1.7664], [35.5676, 1.764], [35.5621, 1.7672], [35.5596, 1.7662], [35.5493, 1.7705], [35.5453, 1.7684], [35.5373, 1.7699], [35.5327, 1.7677], [35.528, 1.7682], [35.5159, 1.7744], [35.5036, 1.7708], [35.5, 1.7729], [35.498, 1.7709], [35.4985, 1.7733], [35.4948, 1.774], [35.4972, 1.7804], [35.4953, 1.7811], [35.495, 1.7832], [35.4925, 1.7832], [35.4915, 1.7849], [35.4928, 1.787], [35.4897, 1.7862], [35.4879, 1.7904], [35.4853, 1.7917], [35.4858, 1.7953], [35.4827, 1.7966], [35.4825, 1.8019], [35.4759, 1.8043], [35.4746, 1.8085], [35.4709, 1.8083], [35.4715, 1.8102], [35.4742, 1.8108], [35.4745, 1.8145], [35.4776, 1.8179], [35.473, 1.8186], [35.4726, 1.822], [35.4769, 1.8267], [35.4747, 1.8284], [35.4767, 1.8311], [35.4743, 1.8333], [35.4732, 1.8411], [35.4691, 1.8436], [35.4675, 1.8474], [35.4608, 1.8455], [35.4575, 1.8516], [35.4527, 1.8506], [35.4518, 1.8554], [35.3694, 1.9343], [35.3745, 1.9402], [35.3749, 1.9465], [35.3769, 1.9502], [35.3805, 1.9533], [35.3872, 1.9549], [35.3912, 1.9585], [35.3893, 1.9654], [35.3937, 1.9688], [35.3432, 2.1714], [35.3118, 2.2841], [35.3073, 2.3307], [35.3031, 2.403], [35.3024, 2.4018], [35.2976, 2.4206], [35.2917, 2.4285], [35.2721, 2.4374], [35.2507, 2.4397], [35.2459, 2.4455], [35.2325, 2.4469], [35.2288, 2.4498], [35.2231, 2.4593], [35.2211, 2.4662], [35.2205, 2.4788], [35.2153, 2.4965], [35.2129, 2.5425], [35.1869, 2.5716], [35.1858, 2.5789], [35.1784, 2.598], [35.1668, 2.6167], [35.1575, 2.6284], [35.1317, 2.6452], [35.1126, 2.6526], [35.1106, 2.6499], [35.1091, 2.6527], [35.0961, 2.6495], [35.0923, 2.6454], [35.0811, 2.6394], [35.0742, 2.6284], [35.0667, 2.6256], [35.0641, 2.6227], [35.0595, 2.6108], [35.0598, 2.6033], [35.0565, 2.5912], [35.0583, 2.5776], [35.0555, 2.5677], [35.0386, 2.5379], [35.0197, 2.513], [35.0156, 2.5018], [35.0204, 2.4877], [35.0193, 2.4748], [35.0218, 2.4685], [35.0194, 2.4607], [35.0228, 2.4468], [35.0256, 2.4439], [35.0256, 2.4365], [34.9702, 2.4483], [34.9644, 2.4509], [34.9536, 2.4579], [34.9525, 2.4614], [34.9549, 2.4687], [34.9534, 2.4713], [34.9544, 2.4726], [34.9485, 2.4724], [34.9367, 2.5001], [34.933, 2.5162], [34.913, 2.5168], [34.9051, 2.5475], [34.8973, 2.5883], [34.8938, 2.5931], [34.8805, 2.5897], [34.8783, 2.5726], [34.8682, 2.5708], [34.8522, 2.5838], [34.8385, 2.6045], [34.8316, 2.6211], [34.7992, 2.6561], [34.7904, 2.6836], [34.7754, 2.6981], [34.7838, 2.7429], [34.7835, 2.7554], [34.7781, 2.7706], [34.7753, 2.788], [34.7672, 2.8027], [34.7659, 2.8137], [34.7621, 2.8212], [34.755, 2.8287], [34.7519, 2.8261], [34.7491, 2.8264], [34.7363, 2.8552], [34.7117, 2.8655], [34.7083, 2.8737], [34.7017, 2.8779], [34.6924, 2.8631], [34.6849, 2.8643], [34.6684, 2.8634], [34.6529, 2.8678], [34.6393, 2.907], [34.599, 2.9249], [34.5888, 2.9824], [34.5874, 3.0041], [34.5844, 3.0109], [34.5765, 3.0208], [34.5757, 3.0355], [34.5727, 3.0503], [34.5748, 3.0692], [34.5723, 3.0917], [34.5626, 3.1078], [34.5589, 3.1107], [34.5458, 3.1368], [34.512, 3.1491], [34.4948, 3.1416], [34.4888, 3.1556], [34.482, 3.1654], [34.4705, 3.1729], [34.4604, 3.1746], [34.4558, 3.1823], [34.4474, 3.2833], [34.438, 3.3077], [34.4299, 3.343], [34.4006, 3.3709], [34.4017, 3.4154], [34.4098, 3.4184], [34.4193, 3.4337], [34.4166, 3.451], [34.4038, 3.4703], [34.391, 3.4833], [34.3889, 3.4921], [34.391, 3.4931], [34.396, 3.4883], [34.4247, 3.492], [34.4396, 3.5046], [34.4515, 3.5175], [34.4566, 3.5758], [34.4531, 3.6115], [34.4632, 3.6698], [34.4558, 3.6766], [34.422, 3.6889], [34.4049, 3.6931], [34.4028, 3.7056], [34.3942, 3.7181], [34.3823, 3.7279], [34.365, 3.7355], [34.331, 3.7334], [34.3234, 3.7285], [34.3158, 3.7166], [34.3079, 3.7117], [34.2975, 3.7215], [34.2833, 3.7311], [34.2664, 3.7486], [34.2579, 3.7669], [34.2456, 3.7842], [34.2332, 3.7811], [34.229, 3.7745], [34.2268, 3.7745], [34.226, 3.7829], [34.2203, 3.7845], [34.1858, 3.7713], [34.1709, 3.7681], [34.166, 3.7739], [34.1901, 3.7832], [34.1882, 3.7906], [34.1886, 3.7955], [34.1705, 3.8006], [34.1635, 3.7981], [34.159, 3.8018], [34.1537, 3.8003], [34.1532, 3.8073], [34.1583, 3.8079], [34.1639, 3.8108], [34.1686, 3.8187], [34.18, 3.8319], [34.226, 3.8314], [34.225, 3.8525], [34.2155, 3.8812], [34.2046, 3.8825], [34.175, 3.88], [34.1707, 3.8769], [34.1669, 3.8702], [34.1526, 3.8692], [34.1278, 3.8725], [34.1094, 3.8688], [34.0926, 3.8602], [34.0884, 3.8616], [34.0914, 3.8856], [34.1163, 3.8978], [34.1199, 3.9012], [34.1346, 3.9617], [34.1057, 3.977], [34.0821, 4.0026], [34.06, 4.0099], [34.0588, 4.0281], [34.0876, 4.037], [34.0913, 4.0495], [34.0916, 4.0617], [34.0797, 4.0858], [34.0631, 4.0946], [34.0495, 4.1215], [34.0657, 4.1444], [34.0474, 4.1795], [34.002, 4.2214], [34.0177, 4.236], [33.9921, 4.256], [34.2232, 4.4828], [34.2256, 4.4811], [34.3715, 4.6243], [34.6718, 4.755], [34.9287, 4.8588], [34.9289, 4.8573], [35.2624, 4.9804], [35.2635, 4.9777], [35.2654, 4.9772], [35.2996, 4.9829], [35.3507, 5.01], [35.4079, 5.0612], [35.441, 5.0582], [35.426, 4.9859], [35.42, 4.9438], [35.5193, 4.9588], [35.5374, 4.9588], [35.524, 4.9163], [35.5194, 4.9181], [35.5156, 4.8786], [35.503, 4.8094], [35.4973, 4.7948], [35.487, 4.7774], [35.5056, 4.7636], [35.5103, 4.7481], [35.5836, 4.6239], [35.6903, 4.6251], [35.6984, 4.6228], [35.7048, 4.623], [35.7076, 4.6311], [35.736, 4.6669], [35.7661, 4.6819], [35.7842, 4.6729], [35.7926, 4.6264], [35.8699, 4.6273], [35.9029, 4.5896], [35.9654, 4.5115], [35.9969, 4.4914], [36.0391, 4.4541], [36.0436, 4.4512], [36.0521, 4.4492], [36.0503, 4.4463], [36.0495, 4.2787], [36.0521, 3.2385], [36.0741, 3.2259], [36.0833, 3.2255], [36.1013, 3.2205], [36.1109, 3.2207], [36.1209, 3.2133], [36.1379, 3.2087], [36.1413, 3.2099], [36.1423, 3.2119], [36.1399, 3.2149], [36.1441, 3.2227], [36.1461, 3.2233], [36.1485, 3.2217], [36.1517, 3.2147], [36.1505, 3.1907], [36.1385, 3.1515], [36.1393, 3.1489], [36.1439, 3.1453], [36.1495, 3.1347], [36.1521, 3.1171], [36.1497, 3.0955], [36.1525, 3.0911], [36.1527, 3.0865], [36.1519, 3.0815], [36.1473, 3.0741], [36.1409, 3.0725], [36.1398, 3.0656], [36.142, 3.0618], [36.1423, 3.0533], [36.1407, 3.0365], [36.1369, 3.0295], [36.1364, 3.018], [36.1318, 3.0145], [36.1276, 3.0075], [36.1238, 2.9854], [36.1256, 2.9841], [36.1296, 2.9854], [36.13, 2.9792], [36.1333, 2.9827], [36.1374, 2.9843], [36.1341, 2.9685], [36.1385, 2.9703], [36.1643, 2.9677], [36.1703, 2.9691], [36.1793, 2.9673], [36.1927, 2.9691], [36.2031, 2.9623], [36.2175, 2.9599], [36.2227, 2.9563], [36.2249, 2.9569], [36.2251, 2.9587], [36.2331, 2.9585], [36.2477, 2.9507], [36.2549, 2.9561], [36.2556, 2.9656], [36.2537, 2.9695], [36.2548, 2.9704], [36.2582, 2.9638], [36.2615, 2.939], [36.2669, 2.9264], [36.2691, 2.9148], [36.2827, 2.8964], [36.2914, 2.8926], [36.2998, 2.8924], [36.3248, 2.8775], [36.3467, 2.8673], [36.3596, 2.8659], [36.3643, 2.8621], [36.3675, 2.856], [36.3785, 2.8459], [36.3831, 2.8394], [36.387, 2.832], [36.3882, 2.8216], [36.3963, 2.8039], [36.4117, 2.7784], [36.4132, 2.7736], [36.4187, 2.7675], [36.4219, 2.7496], [36.4213, 2.7405], [36.4293, 2.723], [36.4322, 2.7187], [36.4471, 2.7102], [36.4468, 2.7073], [36.4367, 2.6927], [36.4339, 2.683], [36.4361, 2.6693], [36.4347, 2.6523], [36.4381, 2.6433], [36.4383, 2.6341], [36.4535, 2.6129], [36.4639, 2.6097], [36.4729, 2.6093], [36.4743, 2.6017], [36.4935, 2.5761], [36.5149, 2.5605], [36.5248, 2.5304], [36.5302, 2.5264], [36.5311, 2.5005], [36.5279, 2.4921], [36.5275, 2.4867], [36.5295, 2.4735], [36.5249, 2.4595], [36.5244, 2.451], [36.532, 2.4361], [36.5391, 2.4114], [36.5418, 2.4084], [36.5483, 2.4069], [36.5527, 2.4027], [36.5604, 2.4006], [36.5664, 2.4039], [36.5682, 2.4086], [36.5761, 2.408], [36.5795, 2.4109], [36.5855, 2.4109], [36.5893, 2.4132], [36.5917, 2.4172], [36.5933, 2.4171], [36.6025, 2.4092], [36.6013, 2.4095], [36.6013, 2.3608], [36.7233, 2.3026], [36.7239, 2.292], [36.722, 2.2859], [36.7236, 2.276], [36.7151, 2.2672], [36.7086, 2.2643], [36.7127, 2.2611], [36.7143, 2.2555], [36.7139, 2.246], [36.7104, 2.2407], [36.7124, 2.2367], [36.7121, 2.2263], [36.7115, 2.2241], [36.7041, 2.2215], [36.7004, 2.2176], [36.7018, 2.2039], [36.6814, 2.1973], [36.6708, 2.1909], [36.6587, 2.1789], [36.6487, 2.1731], [36.6365, 2.1682], [36.6206, 2.1654], [36.6128, 2.161], [36.6132, 2.1629], [36.6111, 2.1629], [36.5996, 2.1536], [36.595, 2.1464], [36.5879, 2.1458], [36.585, 2.1409], [36.5806, 2.1258], [36.5647, 2.1084], [36.5676, 2.0965], [36.5661, 2.085], [36.5692, 2.0583], [36.5611, 2.0502], [36.5582, 2.0504], [36.5563, 2.0485], [36.556, 2.0429], [36.5518, 2.0346], [36.5499, 2.0316], [36.5474, 2.0325], [36.5445, 2.0277], [36.5474, 2.0212], [36.5473, 2.0083], [36.545, 2.0118], [36.5431, 2.0121], [36.5415, 2.0114], [36.5402, 2.0076], [36.5454, 2.004], [36.5467, 1.9953], [36.541, 1.9778], [36.5364, 1.9703], [36.5321, 1.9573], [36.5325, 1.9544], [36.5342, 1.9535], [36.5379, 1.9551], [36.5396, 1.9609], [36.5412, 1.9603], [36.5397, 1.944], [36.5421, 1.9294], [36.5414, 1.9187], [36.5384, 1.9128], [36.5375, 1.9065], [36.533, 1.9047], [36.5291, 1.8969], [36.5256, 1.8952], [36.5248, 1.8905], [36.5218, 1.8901], [36.5203, 1.8865], [36.5161, 1.8844], [36.5151, 1.8806], [36.5163, 1.8528], [36.5185, 1.8475], [36.5229, 1.8527], [36.5249, 1.8475], [36.5216, 1.8372], [36.5245, 1.8336], [36.523, 1.8306], [36.5173, 1.8322], [36.5147, 1.8311], [36.5155, 1.8232], [36.5219, 1.8143], [36.5316, 1.808], [36.5272, 1.801], [36.5224, 1.7972], [36.5254, 1.7944], [36.524, 1.792], [36.5254, 1.7904], [36.5217, 1.7845], [36.5172, 1.7824], [36.5192, 1.7792], [36.5189, 1.7723], [36.513, 1.7755], [36.5116, 1.7731], [36.5129, 1.7684], [36.519, 1.7636], [36.5193, 1.7569], [36.5228, 1.7583], [36.5256, 1.7643], [36.5279, 1.7578], [36.5207, 1.7468], [36.5159, 1.7466], [36.5096, 1.7383], [36.5087, 1.7251], [36.504, 1.7198], [36.5038, 1.7114], [36.4998, 1.7074], [36.4871, 1.7045], [36.4856, 1.6866], [36.4815, 1.6843], [36.4776, 1.6719], [36.4703, 1.6614], [36.4692, 1.6422], [36.4644, 1.6285], [36.4636, 1.6152], [36.4552, 1.6145], [36.4474, 1.6189], [36.4447, 1.6184], [36.4411, 1.615], [36.4381, 1.603], [36.4331, 1.597], [36.4324, 1.5892], [36.4286, 1.5835], [36.4264, 1.573], [36.4209, 1.571], [36.4128, 1.5615], [36.4021, 1.5369], [36.3956, 1.5263], [36.3895, 1.5251], [36.3855, 1.5324], [36.3796, 1.5373], [36.3757, 1.5432], [36.3725, 1.5707], [36.376, 1.575], [36.3771, 1.5861], [36.3731, 1.594], [36.3701, 1.5965], [36.3588, 1.5871], [36.357, 1.5711], [36.3463, 1.571], [36.3448, 1.5722], [36.3446, 1.5785], [36.3413, 1.5734], [36.3346, 1.5694], [36.3026, 1.5413], [36.3011, 1.5346], [36.301, 1.5148], [36.2968, 1.5043], [36.2999, 1.4961], [36.3, 1.4911], [36.2896, 1.4698], [36.2925, 1.4689], [36.3181, 1.4763], [36.3221, 1.4756], [36.3422, 1.4508], [36.3487, 1.4445], [36.3558, 1.4413], [36.3627, 1.4431], [36.3676, 1.4426], [36.3747, 1.4463], [36.3802, 1.4456], [36.3868, 1.4499], [36.3927, 1.4493], [36.4015, 1.4373], [36.409, 1.4326], [36.4199, 1.4206], [36.4274, 1.4192], [36.4282, 1.4125], [36.4379, 1.4159], [36.4418, 1.4145], [36.4474, 1.4165], [36.4505, 1.4141], [36.4508, 1.41], [36.4553, 1.4023], [36.462, 1.4072], [36.4669, 1.4025], [36.466, 1.3846], [36.4604, 1.3717], [36.4416, 1.3622], [36.434, 1.3526], [36.4248, 1.3496], [36.4223, 1.3465], [36.4211, 1.3347], [36.4124, 1.3297], [36.4039, 1.3173], [36.396, 1.3184], [36.3937, 1.3157], [36.3972, 1.3119], [36.403, 1.3121], [36.4061, 1.3036], [36.4108, 1.3042], [36.421, 1.2996], [36.4267, 1.3046], [36.4359, 1.3081], [36.4381, 1.3049], [36.4367, 1.2953], [36.4402, 1.2919], [36.4444, 1.2822], [36.4503, 1.2765], [36.4536, 1.2607], [36.4511, 1.2574], [36.4472, 1.2561], [36.45, 1.2529], [36.4472, 1.2521], [36.4305, 1.2668], [36.4238, 1.2671], [36.4176, 1.2744], [36.4096, 1.2789], [36.4042, 1.2734], [36.3969, 1.2771], [36.395, 1.2699], [36.3912, 1.2705], [36.3893, 1.2674], [36.3966, 1.2592], [36.4004, 1.2589], [36.4045, 1.2563], [36.4094, 1.2633], [36.412, 1.2642], [36.4144, 1.2598], [36.4142, 1.2489], [36.4212, 1.2384], [36.4171, 1.2308], [36.4119, 1.2362], [36.4057, 1.2342], [36.3951, 1.2249], [36.3974, 1.2118], [36.3966, 1.1948], [36.3901, 1.1888], [36.3915, 1.1796], [36.3948, 1.1771], [36.3979, 1.1774], [36.4199, 1.1907], [36.4272, 1.1874], [36.4333, 1.1824], [36.438, 1.1826], [36.4427, 1.1792], [36.4413, 1.1646], [36.4361, 1.1547], [36.4336, 1.1436], [36.44, 1.1378], [36.4447, 1.1198], [36.4447, 1.1126], [36.4398, 1.1008], [36.4388, 1.091], [36.4391, 1.0851], [36.4434, 1.0755], [36.4425, 1.0616], [36.4443, 1.0573], [36.4426, 1.041], [36.4472, 1.0346], [36.4484, 1.0277], [36.4532, 1.0183], [36.4508, 1.0017], [36.4444, 0.9838], [36.428, 0.9505], [36.4163, 0.9365], [36.3943, 0.9163], [36.3931, 0.9168]]]], "type": "MultiPolygon"}, "properties": {"CC_1": "23", "COUNTRY": "Kenya", "ENGTYPE_1": "County", "GID_0": "KEN", "GID_1": "KEN.43_1", "HASC_1": "KE.TU", "ISO_1": "KE-43", "NAME_1": "Turkana", "NL_NAME_1": "NA", "TYPE_1": "County", "VARNAME_1": "NA"}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            var layer_control_9087e31d9b297f42b065681a14729dfa = {
+                base_layers : {
+                    "openstreetmap" : tile_layer_414c62c4352583139281f841141e2de1,
+                },
+                overlays :  {
+                    "Turkana" : geo_json_6153519eaa6e3f746b5db97a8c7dd6a5,
+                },
+            };
+            L.control.layers(
+                layer_control_9087e31d9b297f42b065681a14729dfa.base_layers,
+                layer_control_9087e31d9b297f42b065681a14729dfa.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+            var circle_marker_a2f863b6fa659cb6627e01366f0ad05f = L.circleMarker(
+                [2.99942, 35.51371],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_4cc583e46b3be30d455c2661510e6007 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_a0c4df7b52142f8ce024e3ff30cd6d37 = $(`<div id="html_a0c4df7b52142f8ce024e3ff30cd6d37" style="width: 100.0%; height: 100.0%;"><b>Katapakori Hp 2</b><br>Fluoride: 0.41 mg/L<br>pH: 8.21<br>EC: 774.0 µS/cm</div>`)[0];
+                popup_4cc583e46b3be30d455c2661510e6007.setContent(html_a0c4df7b52142f8ce024e3ff30cd6d37);
+            
+        
+
+        circle_marker_a2f863b6fa659cb6627e01366f0ad05f.bindPopup(popup_4cc583e46b3be30d455c2661510e6007)
+        ;
+
+        
+    
+    
+            circle_marker_a2f863b6fa659cb6627e01366f0ad05f.bindTooltip(
+                `<div>
+                     Site: Katapakori Hp 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_d00cb5a5ca9b754f32d0d057206e3b82 = L.circleMarker(
+                [3.00048, 35.51269],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_2abe9fdfca8c68d021fc75e89a8f83e7 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_6ce2597251e37faa4b7f710a7385170d = $(`<div id="html_6ce2597251e37faa4b7f710a7385170d" style="width: 100.0%; height: 100.0%;"><b>Loyo Pri Hp</b><br>Fluoride: 17.24 mg/L<br>pH: 8.68<br>EC: 5170.0 µS/cm</div>`)[0];
+                popup_2abe9fdfca8c68d021fc75e89a8f83e7.setContent(html_6ce2597251e37faa4b7f710a7385170d);
+            
+        
+
+        circle_marker_d00cb5a5ca9b754f32d0d057206e3b82.bindPopup(popup_2abe9fdfca8c68d021fc75e89a8f83e7)
+        ;
+
+        
+    
+    
+            circle_marker_d00cb5a5ca9b754f32d0d057206e3b82.bindTooltip(
+                `<div>
+                     Site: Loyo Pri Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_06fb1e95f1b217af020cd3cc26ea33fd = L.circleMarker(
+                [3.01309, 35.51949],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_d830d1b35ef86ee0f11f16ec42183ab6 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_04cc8ef55959a0faf0d190a359da79a4 = $(`<div id="html_04cc8ef55959a0faf0d190a359da79a4" style="width: 100.0%; height: 100.0%;"><b>Nabuelpus</b><br>Fluoride: 1.15 mg/L<br>pH: 8.27<br>EC: 931.0 µS/cm</div>`)[0];
+                popup_d830d1b35ef86ee0f11f16ec42183ab6.setContent(html_04cc8ef55959a0faf0d190a359da79a4);
+            
+        
+
+        circle_marker_06fb1e95f1b217af020cd3cc26ea33fd.bindPopup(popup_d830d1b35ef86ee0f11f16ec42183ab6)
+        ;
+
+        
+    
+    
+            circle_marker_06fb1e95f1b217af020cd3cc26ea33fd.bindTooltip(
+                `<div>
+                     Site: Nabuelpus
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ff21daa0afaaec059eb838b8dc2c1590 = L.circleMarker(
+                [3.04402, 35.49018],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_7e39d695cd9f453fd031cdcbfbcffde4 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ef8aeb773cf764b4e70c7554e7146964 = $(`<div id="html_ef8aeb773cf764b4e70c7554e7146964" style="width: 100.0%; height: 100.0%;"><b>Nachomin Bh</b><br>Fluoride: 2.85 mg/L<br>pH: 8.41<br>EC: 1025.0 µS/cm</div>`)[0];
+                popup_7e39d695cd9f453fd031cdcbfbcffde4.setContent(html_ef8aeb773cf764b4e70c7554e7146964);
+            
+        
+
+        circle_marker_ff21daa0afaaec059eb838b8dc2c1590.bindPopup(popup_7e39d695cd9f453fd031cdcbfbcffde4)
+        ;
+
+        
+    
+    
+            circle_marker_ff21daa0afaaec059eb838b8dc2c1590.bindTooltip(
+                `<div>
+                     Site: Nachomin Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_421831dd4159d7c32ed33edd47843103 = L.circleMarker(
+                [3.05247, 35.55056],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_219a277823fe7ed131fbf63debbdb5f7 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_bac9de4df2a2e3c0cb7ccd71a39121f6 = $(`<div id="html_bac9de4df2a2e3c0cb7ccd71a39121f6" style="width: 100.0%; height: 100.0%;"><b>Bokotom Hp</b><br>Fluoride: 2.19 mg/L<br>pH: 8.4<br>EC: 8260.0 µS/cm</div>`)[0];
+                popup_219a277823fe7ed131fbf63debbdb5f7.setContent(html_bac9de4df2a2e3c0cb7ccd71a39121f6);
+            
+        
+
+        circle_marker_421831dd4159d7c32ed33edd47843103.bindPopup(popup_219a277823fe7ed131fbf63debbdb5f7)
+        ;
+
+        
+    
+    
+            circle_marker_421831dd4159d7c32ed33edd47843103.bindTooltip(
+                `<div>
+                     Site: Bokotom Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_0691a538b1745e0b889f0f2dede3acf0 = L.circleMarker(
+                [3.06397, 35.49678],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_1c9cdfba4640ef8adbe6712ee0bdfb82 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_d7b1c41eade9022995c481c11b683585 = $(`<div id="html_d7b1c41eade9022995c481c11b683585" style="width: 100.0%; height: 100.0%;"><b>Loyo Handpump</b><br>Fluoride: 5.53 mg/L<br>pH: 8.7<br>EC: 1884.0 µS/cm</div>`)[0];
+                popup_1c9cdfba4640ef8adbe6712ee0bdfb82.setContent(html_d7b1c41eade9022995c481c11b683585);
+            
+        
+
+        circle_marker_0691a538b1745e0b889f0f2dede3acf0.bindPopup(popup_1c9cdfba4640ef8adbe6712ee0bdfb82)
+        ;
+
+        
+    
+    
+            circle_marker_0691a538b1745e0b889f0f2dede3acf0.bindTooltip(
+                `<div>
+                     Site: Loyo Handpump
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_8e0e9f548b4269733193395cfd45dd93 = L.circleMarker(
+                [3.0654, 35.56162],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_cc59a17bcd0c9d04cfd092971a28109f = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_71bdb55798c938088cf9126cf683e27e = $(`<div id="html_71bdb55798c938088cf9126cf683e27e" style="width: 100.0%; height: 100.0%;"><b>Kakemera Church</b><br>Fluoride: 1.75 mg/L<br>pH: 8.18<br>EC: 1182.0 µS/cm</div>`)[0];
+                popup_cc59a17bcd0c9d04cfd092971a28109f.setContent(html_71bdb55798c938088cf9126cf683e27e);
+            
+        
+
+        circle_marker_8e0e9f548b4269733193395cfd45dd93.bindPopup(popup_cc59a17bcd0c9d04cfd092971a28109f)
+        ;
+
+        
+    
+    
+            circle_marker_8e0e9f548b4269733193395cfd45dd93.bindTooltip(
+                `<div>
+                     Site: Kakemera Church
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_cc7d00567b368eb2af99295dad6472bd = L.circleMarker(
+                [3.06843, 35.50918],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_33e151e577a33e88fa1c96bef90b346d = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_dfcb743a5704f52840a4e68e68bcb2de = $(`<div id="html_dfcb743a5704f52840a4e68e68bcb2de" style="width: 100.0%; height: 100.0%;"><b>Lodwar Mixed Pri 2</b><br>Fluoride: 1.62 mg/L<br>pH: 8.18<br>EC: 403.0 µS/cm</div>`)[0];
+                popup_33e151e577a33e88fa1c96bef90b346d.setContent(html_dfcb743a5704f52840a4e68e68bcb2de);
+            
+        
+
+        circle_marker_cc7d00567b368eb2af99295dad6472bd.bindPopup(popup_33e151e577a33e88fa1c96bef90b346d)
+        ;
+
+        
+    
+    
+            circle_marker_cc7d00567b368eb2af99295dad6472bd.bindTooltip(
+                `<div>
+                     Site: Lodwar Mixed Pri 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_acf3dd1f5d40a2d9915058f019638370 = L.circleMarker(
+                [3.06945, 35.57127],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_04f62b7534f82e039fe180756736080d = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_16b34a4b4424a3b4045ea2b43c714a71 = $(`<div id="html_16b34a4b4424a3b4045ea2b43c714a71" style="width: 100.0%; height: 100.0%;"><b>Opp Stagra Bh</b><br>Fluoride: 3.8 mg/L<br>pH: 8.81<br>EC: 4060.0 µS/cm</div>`)[0];
+                popup_04f62b7534f82e039fe180756736080d.setContent(html_16b34a4b4424a3b4045ea2b43c714a71);
+            
+        
+
+        circle_marker_acf3dd1f5d40a2d9915058f019638370.bindPopup(popup_04f62b7534f82e039fe180756736080d)
+        ;
+
+        
+    
+    
+            circle_marker_acf3dd1f5d40a2d9915058f019638370.bindTooltip(
+                `<div>
+                     Site: Opp Stagra Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_26c0bcdb3fedb772c1a8c95ab2bc91fa = L.circleMarker(
+                [3.07335, 35.50945],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_e2ece7d2cd49adff4869a52922446d6e = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_e22e481b09d4b0bc9945ad3749963401 = $(`<div id="html_e22e481b09d4b0bc9945ad3749963401" style="width: 100.0%; height: 100.0%;"><b>Nabuin Hp</b><br>Fluoride: 1.79 mg/L<br>pH: 8.25<br>EC: 797.0 µS/cm</div>`)[0];
+                popup_e2ece7d2cd49adff4869a52922446d6e.setContent(html_e22e481b09d4b0bc9945ad3749963401);
+            
+        
+
+        circle_marker_26c0bcdb3fedb772c1a8c95ab2bc91fa.bindPopup(popup_e2ece7d2cd49adff4869a52922446d6e)
+        ;
+
+        
+    
+    
+            circle_marker_26c0bcdb3fedb772c1a8c95ab2bc91fa.bindTooltip(
+                `<div>
+                     Site: Nabuin Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a137cc6696e42b9e8a92e37a8238f937 = L.circleMarker(
+                [3.08601, 35.56207],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_e6d2099e8e4aa7b2b121403cbf4ad3d5 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_9dbfe633a5100fb4818459a5aba9f3ae = $(`<div id="html_9dbfe633a5100fb4818459a5aba9f3ae" style="width: 100.0%; height: 100.0%;"><b>Bh 1B</b><br>Fluoride: 0.45 mg/L<br>pH: 8.09<br>EC: 224.0 µS/cm</div>`)[0];
+                popup_e6d2099e8e4aa7b2b121403cbf4ad3d5.setContent(html_9dbfe633a5100fb4818459a5aba9f3ae);
+            
+        
+
+        circle_marker_a137cc6696e42b9e8a92e37a8238f937.bindPopup(popup_e6d2099e8e4aa7b2b121403cbf4ad3d5)
+        ;
+
+        
+    
+    
+            circle_marker_a137cc6696e42b9e8a92e37a8238f937.bindTooltip(
+                `<div>
+                     Site: Bh 1B
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_738d9fda1c3fea966c23d3b07094f74b = L.circleMarker(
+                [3.08879, 35.53587],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_185c89c978cb9c1f3ebee2f4b7ff53f2 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_02c97c99253d450b175a2db73085a785 = $(`<div id="html_02c97c99253d450b175a2db73085a785" style="width: 100.0%; height: 100.0%;"><b>Napuu 2</b><br>Fluoride: 0.88 mg/L<br>pH: 8.24<br>EC: 420.0 µS/cm</div>`)[0];
+                popup_185c89c978cb9c1f3ebee2f4b7ff53f2.setContent(html_02c97c99253d450b175a2db73085a785);
+            
+        
+
+        circle_marker_738d9fda1c3fea966c23d3b07094f74b.bindPopup(popup_185c89c978cb9c1f3ebee2f4b7ff53f2)
+        ;
+
+        
+    
+    
+            circle_marker_738d9fda1c3fea966c23d3b07094f74b.bindTooltip(
+                `<div>
+                     Site: Napuu 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_207f3f368703d9509f113f6ebb9cb4c6 = L.circleMarker(
+                [3.08922, 35.54878],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_88ef3feb25387d56071d986f7cd0809e = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_3ab92b9017b16610006c55d55c754b81 = $(`<div id="html_3ab92b9017b16610006c55d55c754b81" style="width: 100.0%; height: 100.0%;"><b>Bh 9</b><br>Fluoride: 0.5 mg/L<br>pH: 8.1<br>EC: 309.0 µS/cm</div>`)[0];
+                popup_88ef3feb25387d56071d986f7cd0809e.setContent(html_3ab92b9017b16610006c55d55c754b81);
+            
+        
+
+        circle_marker_207f3f368703d9509f113f6ebb9cb4c6.bindPopup(popup_88ef3feb25387d56071d986f7cd0809e)
+        ;
+
+        
+    
+    
+            circle_marker_207f3f368703d9509f113f6ebb9cb4c6.bindTooltip(
+                `<div>
+                     Site: Bh 9
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b685b8a229f1726999de04417331c387 = L.circleMarker(
+                [3.09921, 35.55844],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_34da470bf5970fe3f52c0e4affbc6cf3 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ffe922ddfb364fade8a2cfa984cae742 = $(`<div id="html_ffe922ddfb364fade8a2cfa984cae742" style="width: 100.0%; height: 100.0%;"><b>Lolupe Pri Hp</b><br>Fluoride: 0.98 mg/L<br>pH: 8.38<br>EC: 698.0 µS/cm</div>`)[0];
+                popup_34da470bf5970fe3f52c0e4affbc6cf3.setContent(html_ffe922ddfb364fade8a2cfa984cae742);
+            
+        
+
+        circle_marker_b685b8a229f1726999de04417331c387.bindPopup(popup_34da470bf5970fe3f52c0e4affbc6cf3)
+        ;
+
+        
+    
+    
+            circle_marker_b685b8a229f1726999de04417331c387.bindTooltip(
+                `<div>
+                     Site: Lolupe Pri Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_a0262ecb7e5467c63de1240a41a18e28 = L.circleMarker(
+                [3.10402, 35.56311],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_9cbe7dd46497614a0b920ecd9a8cd271 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_7422887139c7e4fa98c8eb4fde73c1ba = $(`<div id="html_7422887139c7e4fa98c8eb4fde73c1ba" style="width: 100.0%; height: 100.0%;"><b>Katapakori Hp 1</b><br>Fluoride: 1.59 mg/L<br>pH: 7.95<br>EC: 643.0 µS/cm</div>`)[0];
+                popup_9cbe7dd46497614a0b920ecd9a8cd271.setContent(html_7422887139c7e4fa98c8eb4fde73c1ba);
+            
+        
+
+        circle_marker_a0262ecb7e5467c63de1240a41a18e28.bindPopup(popup_9cbe7dd46497614a0b920ecd9a8cd271)
+        ;
+
+        
+    
+    
+            circle_marker_a0262ecb7e5467c63de1240a41a18e28.bindTooltip(
+                `<div>
+                     Site: Katapakori Hp 1
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_70779e9b5bbae2b416a14f44d79520fc = L.circleMarker(
+                [3.11008, 35.57593],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_4be13dd589210ae6fbe0ef9e07fe21c8 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_5f2425c9a2afea68aa6b6be10124c4ca = $(`<div id="html_5f2425c9a2afea68aa6b6be10124c4ca" style="width: 100.0%; height: 100.0%;"><b>Nadapal Supply bh</b><br>Fluoride: 1.14 mg/L<br>pH: 8.29<br>EC: 510.0 µS/cm</div>`)[0];
+                popup_4be13dd589210ae6fbe0ef9e07fe21c8.setContent(html_5f2425c9a2afea68aa6b6be10124c4ca);
+            
+        
+
+        circle_marker_70779e9b5bbae2b416a14f44d79520fc.bindPopup(popup_4be13dd589210ae6fbe0ef9e07fe21c8)
+        ;
+
+        
+    
+    
+            circle_marker_70779e9b5bbae2b416a14f44d79520fc.bindTooltip(
+                `<div>
+                     Site: Nadapal Supply bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_16549f6fc34c66c52580ab16f13a20bf = L.circleMarker(
+                [3.1115, 35.57898],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_fc6d277656fdc482bc16bab714f922f1 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_0b96206e2911e265eee595dbf0814bc3 = $(`<div id="html_0b96206e2911e265eee595dbf0814bc3" style="width: 100.0%; height: 100.0%;"><b>Lolupe Handpump Resample</b><br>Fluoride: 0.7 mg/L<br>pH: 8.2<br>EC: 454.0 µS/cm</div>`)[0];
+                popup_fc6d277656fdc482bc16bab714f922f1.setContent(html_0b96206e2911e265eee595dbf0814bc3);
+            
+        
+
+        circle_marker_16549f6fc34c66c52580ab16f13a20bf.bindPopup(popup_fc6d277656fdc482bc16bab714f922f1)
+        ;
+
+        
+    
+    
+            circle_marker_16549f6fc34c66c52580ab16f13a20bf.bindTooltip(
+                `<div>
+                     Site: Lolupe Handpump Resample
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_0a3b65cd87aa7b5ce175513a5466670c = L.circleMarker(
+                [3.11458, 35.56432],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_d9fae6e3576047ababf3304d1452c239 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_4241aebd62efd36bc5a0085c31de7b56 = $(`<div id="html_4241aebd62efd36bc5a0085c31de7b56" style="width: 100.0%; height: 100.0%;"><b>Eleleia Pri Hp</b><br>Fluoride: 2.15 mg/L<br>pH: 8.67<br>EC: 906.0 µS/cm</div>`)[0];
+                popup_d9fae6e3576047ababf3304d1452c239.setContent(html_4241aebd62efd36bc5a0085c31de7b56);
+            
+        
+
+        circle_marker_0a3b65cd87aa7b5ce175513a5466670c.bindPopup(popup_d9fae6e3576047ababf3304d1452c239)
+        ;
+
+        
+    
+    
+            circle_marker_0a3b65cd87aa7b5ce175513a5466670c.bindTooltip(
+                `<div>
+                     Site: Eleleia Pri Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_02fdb3c38d0c488e669f9df9b84f6df8 = L.circleMarker(
+                [3.11827, 35.58025],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_0687d4d3a6be45cc1ce7d0e6a7c5bfe9 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_c10bdc6bfd462fd7f57bccb3ab7268d4 = $(`<div id="html_c10bdc6bfd462fd7f57bccb3ab7268d4" style="width: 100.0%; height: 100.0%;"><b>Chukultom Hp</b><br>Fluoride: 1.56 mg/L<br>pH: 8.56<br>EC: 736.0 µS/cm</div>`)[0];
+                popup_0687d4d3a6be45cc1ce7d0e6a7c5bfe9.setContent(html_c10bdc6bfd462fd7f57bccb3ab7268d4);
+            
+        
+
+        circle_marker_02fdb3c38d0c488e669f9df9b84f6df8.bindPopup(popup_0687d4d3a6be45cc1ce7d0e6a7c5bfe9)
+        ;
+
+        
+    
+    
+            circle_marker_02fdb3c38d0c488e669f9df9b84f6df8.bindTooltip(
+                `<div>
+                     Site: Chukultom Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_dbe7504017f5b8a084d16ee7786102d0 = L.circleMarker(
+                [3.12189, 35.58114],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_792e8e008ca82fcb3d6f745f57437999 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_c31512e3a42cac35e96b160d676c0625 = $(`<div id="html_c31512e3a42cac35e96b160d676c0625" style="width: 100.0%; height: 100.0%;"><b>Nakwamekwi Pri Bh</b><br>Fluoride: 0.56 mg/L<br>pH: 8.22<br>EC: 239.0 µS/cm</div>`)[0];
+                popup_792e8e008ca82fcb3d6f745f57437999.setContent(html_c31512e3a42cac35e96b160d676c0625);
+            
+        
+
+        circle_marker_dbe7504017f5b8a084d16ee7786102d0.bindPopup(popup_792e8e008ca82fcb3d6f745f57437999)
+        ;
+
+        
+    
+    
+            circle_marker_dbe7504017f5b8a084d16ee7786102d0.bindTooltip(
+                `<div>
+                     Site: Nakwamekwi Pri Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ce2725d973f91c4f720d2691292a27dc = L.circleMarker(
+                [3.10608, 35.64065],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_0370245c7a5118ddad0262de1d4f095c = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_46b4836d0e08fc52226f124bb9d7aacd = $(`<div id="html_46b4836d0e08fc52226f124bb9d7aacd" style="width: 100.0%; height: 100.0%;"><b>Napuu 1 Resample</b><br>Fluoride: 0.95 mg/L<br>pH: 8.12<br>EC: 1392.0 µS/cm</div>`)[0];
+                popup_0370245c7a5118ddad0262de1d4f095c.setContent(html_46b4836d0e08fc52226f124bb9d7aacd);
+            
+        
+
+        circle_marker_ce2725d973f91c4f720d2691292a27dc.bindPopup(popup_0370245c7a5118ddad0262de1d4f095c)
+        ;
+
+        
+    
+    
+            circle_marker_ce2725d973f91c4f720d2691292a27dc.bindTooltip(
+                `<div>
+                     Site: Napuu 1 Resample
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3508bcb4665be9df73a14b7078fd8100 = L.circleMarker(
+                [3.10766, 35.58237],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_be347181a38b97d353ddeeaeebbdbebc = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_b9dffa1e052bd55eb8e8e5d9256d2b32 = $(`<div id="html_b9dffa1e052bd55eb8e8e5d9256d2b32" style="width: 100.0%; height: 100.0%;"><b>Akibululu Hp</b><br>Fluoride: 0.51 mg/L<br>pH: 7.95<br>EC: 360.0 µS/cm</div>`)[0];
+                popup_be347181a38b97d353ddeeaeebbdbebc.setContent(html_b9dffa1e052bd55eb8e8e5d9256d2b32);
+            
+        
+
+        circle_marker_3508bcb4665be9df73a14b7078fd8100.bindPopup(popup_be347181a38b97d353ddeeaeebbdbebc)
+        ;
+
+        
+    
+    
+            circle_marker_3508bcb4665be9df73a14b7078fd8100.bindTooltip(
+                `<div>
+                     Site: Akibululu Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_37078d80f4fc1a55e6762cf0af1c51a0 = L.circleMarker(
+                [3.10803, 35.59348],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_a5f4a48dee28114a9428625ed5ad062d = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_9e527afdf46ffb9a7494a11bdd2fe413 = $(`<div id="html_9e527afdf46ffb9a7494a11bdd2fe413" style="width: 100.0%; height: 100.0%;"><b>Apuwa Bh</b><br>Fluoride: 0.82 mg/L<br>pH: 8.24<br>EC: 646.0 µS/cm</div>`)[0];
+                popup_a5f4a48dee28114a9428625ed5ad062d.setContent(html_9e527afdf46ffb9a7494a11bdd2fe413);
+            
+        
+
+        circle_marker_37078d80f4fc1a55e6762cf0af1c51a0.bindPopup(popup_a5f4a48dee28114a9428625ed5ad062d)
+        ;
+
+        
+    
+    
+            circle_marker_37078d80f4fc1a55e6762cf0af1c51a0.bindTooltip(
+                `<div>
+                     Site: Apuwa Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_e76abc44c70e5559c7b31cc76c15fb84 = L.circleMarker(
+                [3.11077, 35.59281],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_b59bac352a7f4a2618eff2a7852e4bba = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_e4648718666f0151dc8620111cfc6bd5 = $(`<div id="html_e4648718666f0151dc8620111cfc6bd5" style="width: 100.0%; height: 100.0%;"><b>Nayuu Hp Resample</b><br>Fluoride: 1.23 mg/L<br>pH: 8.55<br>EC: 607.0 µS/cm</div>`)[0];
+                popup_b59bac352a7f4a2618eff2a7852e4bba.setContent(html_e4648718666f0151dc8620111cfc6bd5);
+            
+        
+
+        circle_marker_e76abc44c70e5559c7b31cc76c15fb84.bindPopup(popup_b59bac352a7f4a2618eff2a7852e4bba)
+        ;
+
+        
+    
+    
+            circle_marker_e76abc44c70e5559c7b31cc76c15fb84.bindTooltip(
+                `<div>
+                     Site: Nayuu Hp Resample
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ab0aedbe85b1e511ba5e8b52f9ff9939 = L.circleMarker(
+                [3.11165, 35.59723],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_a2366ec9b4bde86db7607b74f2518017 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_fd214403b550cdccf3d175bb85406486 = $(`<div id="html_fd214403b550cdccf3d175bb85406486" style="width: 100.0%; height: 100.0%;"><b>Turkana Educational Centre</b><br>Fluoride: 0.79 mg/L<br>pH: 8.84<br>EC: 662.0 µS/cm</div>`)[0];
+                popup_a2366ec9b4bde86db7607b74f2518017.setContent(html_fd214403b550cdccf3d175bb85406486);
+            
+        
+
+        circle_marker_ab0aedbe85b1e511ba5e8b52f9ff9939.bindPopup(popup_a2366ec9b4bde86db7607b74f2518017)
+        ;
+
+        
+    
+    
+            circle_marker_ab0aedbe85b1e511ba5e8b52f9ff9939.bindTooltip(
+                `<div>
+                     Site: Turkana Educational Centre
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_f65a99545292d20a7ecc8c14fdba4f25 = L.circleMarker(
+                [3.11197, 35.58784],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_d3e1b08d881522b67543a40065dcc142 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_43601c13b94839ed118e71bc6d71abdd = $(`<div id="html_43601c13b94839ed118e71bc6d71abdd" style="width: 100.0%; height: 100.0%;"><b>Trumpet of Hope Ministries</b><br>Fluoride: 12.28 mg/L<br>pH: 8.82<br>EC: 5570.0 µS/cm</div>`)[0];
+                popup_d3e1b08d881522b67543a40065dcc142.setContent(html_43601c13b94839ed118e71bc6d71abdd);
+            
+        
+
+        circle_marker_f65a99545292d20a7ecc8c14fdba4f25.bindPopup(popup_d3e1b08d881522b67543a40065dcc142)
+        ;
+
+        
+    
+    
+            circle_marker_f65a99545292d20a7ecc8c14fdba4f25.bindTooltip(
+                `<div>
+                     Site: Trumpet of Hope Ministries
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9be43fd0154fb78a26a435e322e1b748 = L.circleMarker(
+                [3.11223, 35.59634],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_7c4ce65d40539ed5317d1b51dad395b4 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_970c52522bc485d901517b743870e859 = $(`<div id="html_970c52522bc485d901517b743870e859" style="width: 100.0%; height: 100.0%;"><b>Bh 1A</b><br>Fluoride: 0.44 mg/L<br>pH: 8.13<br>EC: 195.0 µS/cm</div>`)[0];
+                popup_7c4ce65d40539ed5317d1b51dad395b4.setContent(html_970c52522bc485d901517b743870e859);
+            
+        
+
+        circle_marker_9be43fd0154fb78a26a435e322e1b748.bindPopup(popup_7c4ce65d40539ed5317d1b51dad395b4)
+        ;
+
+        
+    
+    
+            circle_marker_9be43fd0154fb78a26a435e322e1b748.bindTooltip(
+                `<div>
+                     Site: Bh 1A
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9febfa76a44460a05f0b6866ee87f9e0 = L.circleMarker(
+                [3.11272, 35.59839],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_951867c346284fc18dc0d74bc2f9deda = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_559ca2d24899553ffe8ea961bca38220 = $(`<div id="html_559ca2d24899553ffe8ea961bca38220" style="width: 100.0%; height: 100.0%;"><b>Nauren Puu</b><br>Fluoride: 1.54 mg/L<br>pH: 8.24<br>EC: 545.0 µS/cm</div>`)[0];
+                popup_951867c346284fc18dc0d74bc2f9deda.setContent(html_559ca2d24899553ffe8ea961bca38220);
+            
+        
+
+        circle_marker_9febfa76a44460a05f0b6866ee87f9e0.bindPopup(popup_951867c346284fc18dc0d74bc2f9deda)
+        ;
+
+        
+    
+    
+            circle_marker_9febfa76a44460a05f0b6866ee87f9e0.bindTooltip(
+                `<div>
+                     Site: Nauren Puu
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ac087be03adcf1681ee74c76cddbe7c2 = L.circleMarker(
+                [3.11284, 35.60022],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_29117f4b369a0fd420707353b899e1e5 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_d9d3b46e5d6f0a0ae06495472c6fed7e = $(`<div id="html_d9d3b46e5d6f0a0ae06495472c6fed7e" style="width: 100.0%; height: 100.0%;"><b>Bh 2C</b><br>Fluoride: 0.57 mg/L<br>pH: 8.13<br>EC: 241.0 µS/cm</div>`)[0];
+                popup_29117f4b369a0fd420707353b899e1e5.setContent(html_d9d3b46e5d6f0a0ae06495472c6fed7e);
+            
+        
+
+        circle_marker_ac087be03adcf1681ee74c76cddbe7c2.bindPopup(popup_29117f4b369a0fd420707353b899e1e5)
+        ;
+
+        
+    
+    
+            circle_marker_ac087be03adcf1681ee74c76cddbe7c2.bindTooltip(
+                `<div>
+                     Site: Bh 2C
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_0c578dd7bbe9089a4af1efa27eb7841c = L.circleMarker(
+                [3.11313, 35.59803],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_2a90e61c5777e73387116b21b7fac9c9 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_582541cbc476b5b714d6864e2fb210a6 = $(`<div id="html_582541cbc476b5b714d6864e2fb210a6" style="width: 100.0%; height: 100.0%;"><b>Natot Pri Bh</b><br>Fluoride: 1.72 mg/L<br>pH: 8.36<br>EC: 375.0 µS/cm</div>`)[0];
+                popup_2a90e61c5777e73387116b21b7fac9c9.setContent(html_582541cbc476b5b714d6864e2fb210a6);
+            
+        
+
+        circle_marker_0c578dd7bbe9089a4af1efa27eb7841c.bindPopup(popup_2a90e61c5777e73387116b21b7fac9c9)
+        ;
+
+        
+    
+    
+            circle_marker_0c578dd7bbe9089a4af1efa27eb7841c.bindTooltip(
+                `<div>
+                     Site: Natot Pri Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_b0ddb3892563ffdbb245055675aa87ba = L.circleMarker(
+                [3.09904, 35.70395],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_8fc5904d836c84eccd583d8b8a36f1b3 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ed485fc7011c7e1751746d1ec4061c88 = $(`<div id="html_ed485fc7011c7e1751746d1ec4061c88" style="width: 100.0%; height: 100.0%;"><b>Al Noor Comboni Bh</b><br>Fluoride: 6.83 mg/L<br>pH: 8.44<br>EC: 3790.0 µS/cm</div>`)[0];
+                popup_8fc5904d836c84eccd583d8b8a36f1b3.setContent(html_ed485fc7011c7e1751746d1ec4061c88);
+            
+        
+
+        circle_marker_b0ddb3892563ffdbb245055675aa87ba.bindPopup(popup_8fc5904d836c84eccd583d8b8a36f1b3)
+        ;
+
+        
+    
+    
+            circle_marker_b0ddb3892563ffdbb245055675aa87ba.bindTooltip(
+                `<div>
+                     Site: Al Noor Comboni Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6c41546d6d33f47508338d2c85fc57b9 = L.circleMarker(
+                [3.10529, 35.64166],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_ef1ab566b6046abb55503f162abd2db2 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_4ca572475638c934182195772ce78a92 = $(`<div id="html_4ca572475638c934182195772ce78a92" style="width: 100.0%; height: 100.0%;"><b>Nang'omo 3 Hp</b><br>Fluoride: 2.15 mg/L<br>pH: 8.35<br>EC: 654.0 µS/cm</div>`)[0];
+                popup_ef1ab566b6046abb55503f162abd2db2.setContent(html_4ca572475638c934182195772ce78a92);
+            
+        
+
+        circle_marker_6c41546d6d33f47508338d2c85fc57b9.bindPopup(popup_ef1ab566b6046abb55503f162abd2db2)
+        ;
+
+        
+    
+    
+            circle_marker_6c41546d6d33f47508338d2c85fc57b9.bindTooltip(
+                `<div>
+                     Site: Nang'omo 3 Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3380eec7d367f71395e1a9a1bb9e62d6 = L.circleMarker(
+                [3.10605, 35.64088],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_536fc2eef6b6e4642c3a7cea1d0d13d1 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_1666156bdecdafa62b8f090ee2e00b8f = $(`<div id="html_1666156bdecdafa62b8f090ee2e00b8f" style="width: 100.0%; height: 100.0%;"><b>Nakwamekwi Hp</b><br>Fluoride: 1.05 mg/L<br>pH: 8.63<br>EC: 678.0 µS/cm</div>`)[0];
+                popup_536fc2eef6b6e4642c3a7cea1d0d13d1.setContent(html_1666156bdecdafa62b8f090ee2e00b8f);
+            
+        
+
+        circle_marker_3380eec7d367f71395e1a9a1bb9e62d6.bindPopup(popup_536fc2eef6b6e4642c3a7cea1d0d13d1)
+        ;
+
+        
+    
+    
+            circle_marker_3380eec7d367f71395e1a9a1bb9e62d6.bindTooltip(
+                `<div>
+                     Site: Nakwamekwi Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_5125a5946c6d7fcb7eadac3d2aed5250 = L.circleMarker(
+                [3.10627, 35.68088],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_a5b00d08adbf2edc61069b5fb50484f3 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_87f4f21a11f8c9230f5f00fc9a1b3e62 = $(`<div id="html_87f4f21a11f8c9230f5f00fc9a1b3e62" style="width: 100.0%; height: 100.0%;"><b>Kakwanyang Dispensary Bh</b><br>Fluoride: 0.41 mg/L<br>pH: 8.08<br>EC: 280.0 µS/cm</div>`)[0];
+                popup_a5b00d08adbf2edc61069b5fb50484f3.setContent(html_87f4f21a11f8c9230f5f00fc9a1b3e62);
+            
+        
+
+        circle_marker_5125a5946c6d7fcb7eadac3d2aed5250.bindPopup(popup_a5b00d08adbf2edc61069b5fb50484f3)
+        ;
+
+        
+    
+    
+            circle_marker_5125a5946c6d7fcb7eadac3d2aed5250.bindTooltip(
+                `<div>
+                     Site: Kakwanyang Dispensary Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_6db7a69485566b8572d3e8a0e439fdd1 = L.circleMarker(
+                [3.10661, 35.71107],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_3b9e6b28bcc72f1833edb50e487ee3d7 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_e5790a15af4ec366369957b5addd3620 = $(`<div id="html_e5790a15af4ec366369957b5addd3620" style="width: 100.0%; height: 100.0%;"><b>Napuu 4 Resample</b><br>Fluoride: 0.71 mg/L<br>pH: 8.23<br>EC: 614.0 µS/cm</div>`)[0];
+                popup_3b9e6b28bcc72f1833edb50e487ee3d7.setContent(html_e5790a15af4ec366369957b5addd3620);
+            
+        
+
+        circle_marker_6db7a69485566b8572d3e8a0e439fdd1.bindPopup(popup_3b9e6b28bcc72f1833edb50e487ee3d7)
+        ;
+
+        
+    
+    
+            circle_marker_6db7a69485566b8572d3e8a0e439fdd1.bindTooltip(
+                `<div>
+                     Site: Napuu 4 Resample
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_766a47d03e6294cbbc4d34e1cba3ed8f = L.circleMarker(
+                [3.10821, 35.72137],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_3c8cba0a4114d2465cc8216d372cb0c4 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_0f6f3a3b904a401dc38f9cc0ba7fb6ea = $(`<div id="html_0f6f3a3b904a401dc38f9cc0ba7fb6ea" style="width: 100.0%; height: 100.0%;"><b>Napuu Pri Hp</b><br>Fluoride: 3.9 mg/L<br>pH: 8.05<br>EC: 1833.0 µS/cm</div>`)[0];
+                popup_3c8cba0a4114d2465cc8216d372cb0c4.setContent(html_0f6f3a3b904a401dc38f9cc0ba7fb6ea);
+            
+        
+
+        circle_marker_766a47d03e6294cbbc4d34e1cba3ed8f.bindPopup(popup_3c8cba0a4114d2465cc8216d372cb0c4)
+        ;
+
+        
+    
+    
+            circle_marker_766a47d03e6294cbbc4d34e1cba3ed8f.bindTooltip(
+                `<div>
+                     Site: Napuu Pri Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_c5ae4dc031f4608ec0a1a98d93945eba = L.circleMarker(
+                [3.11431, 35.64524],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_248b948b71849f276afd84af3057012a = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_5c93cb9ccd986cb5bfe566fc5445a43e = $(`<div id="html_5c93cb9ccd986cb5bfe566fc5445a43e" style="width: 100.0%; height: 100.0%;"><b>Naoyatira Hp</b><br>Fluoride: 1.15 mg/L<br>pH: 8.5<br>EC: 748.0 µS/cm</div>`)[0];
+                popup_248b948b71849f276afd84af3057012a.setContent(html_5c93cb9ccd986cb5bfe566fc5445a43e);
+            
+        
+
+        circle_marker_c5ae4dc031f4608ec0a1a98d93945eba.bindPopup(popup_248b948b71849f276afd84af3057012a)
+        ;
+
+        
+    
+    
+            circle_marker_c5ae4dc031f4608ec0a1a98d93945eba.bindTooltip(
+                `<div>
+                     Site: Naoyatira Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_99a1362b46e71badda9d010b2474f701 = L.circleMarker(
+                [3.12309, 35.74906],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_8ac8ed0f8d542fb88bbf27b9bc3b2878 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_f606cda77b5202628a9380b0575c1cec = $(`<div id="html_f606cda77b5202628a9380b0575c1cec" style="width: 100.0%; height: 100.0%;"><b>Lokipetot Hp</b><br>Fluoride: 0.48 mg/L<br>pH: 8.4<br>EC: 516.0 µS/cm</div>`)[0];
+                popup_8ac8ed0f8d542fb88bbf27b9bc3b2878.setContent(html_f606cda77b5202628a9380b0575c1cec);
+            
+        
+
+        circle_marker_99a1362b46e71badda9d010b2474f701.bindPopup(popup_8ac8ed0f8d542fb88bbf27b9bc3b2878)
+        ;
+
+        
+    
+    
+            circle_marker_99a1362b46e71badda9d010b2474f701.bindTooltip(
+                `<div>
+                     Site: Lokipetot Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_ed3f77e1c1168c2a9c233d734b99be14 = L.circleMarker(
+                [3.12469, 35.73572],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_489cf7618dada893ad9d3e5139ad9b6d = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_b249e96f2a92c5b89a4ac67bb420d87f = $(`<div id="html_b249e96f2a92c5b89a4ac67bb420d87f" style="width: 100.0%; height: 100.0%;"><b>Frontier Ltd Bh</b><br>Fluoride: 0.25 mg/L<br>pH: 8.26<br>EC: 645.0 µS/cm</div>`)[0];
+                popup_489cf7618dada893ad9d3e5139ad9b6d.setContent(html_b249e96f2a92c5b89a4ac67bb420d87f);
+            
+        
+
+        circle_marker_ed3f77e1c1168c2a9c233d734b99be14.bindPopup(popup_489cf7618dada893ad9d3e5139ad9b6d)
+        ;
+
+        
+    
+    
+            circle_marker_ed3f77e1c1168c2a9c233d734b99be14.bindTooltip(
+                `<div>
+                     Site: Frontier Ltd Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_05a2fe3fedfae37f64da86b47c37315c = L.circleMarker(
+                [3.13633, 35.73245],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_34ec4c74b4cee9f8d0977001ef8ec613 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ac44f7a85e607049016ad8c87324ba5f = $(`<div id="html_ac44f7a85e607049016ad8c87324ba5f" style="width: 100.0%; height: 100.0%;"><b>Locher A Akalale Hp</b><br>Fluoride: 0.4 mg/L<br>pH: 8.18<br>EC: 329.0 µS/cm</div>`)[0];
+                popup_34ec4c74b4cee9f8d0977001ef8ec613.setContent(html_ac44f7a85e607049016ad8c87324ba5f);
+            
+        
+
+        circle_marker_05a2fe3fedfae37f64da86b47c37315c.bindPopup(popup_34ec4c74b4cee9f8d0977001ef8ec613)
+        ;
+
+        
+    
+    
+            circle_marker_05a2fe3fedfae37f64da86b47c37315c.bindTooltip(
+                `<div>
+                     Site: Locher A Akalale Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7f61366d3420da61e11efb1035888ae4 = L.circleMarker(
+                [3.14226, 35.73943],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_c2d30dd6c049ea6684b41c063d0cc111 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_9a29c69325ab8301d1f8c483674294ca = $(`<div id="html_9a29c69325ab8301d1f8c483674294ca" style="width: 100.0%; height: 100.0%;"><b>Canaan Bh</b><br>Fluoride: 3.36 mg/L<br>pH: 8.64<br>EC: 1930.0 µS/cm</div>`)[0];
+                popup_c2d30dd6c049ea6684b41c063d0cc111.setContent(html_9a29c69325ab8301d1f8c483674294ca);
+            
+        
+
+        circle_marker_7f61366d3420da61e11efb1035888ae4.bindPopup(popup_c2d30dd6c049ea6684b41c063d0cc111)
+        ;
+
+        
+    
+    
+            circle_marker_7f61366d3420da61e11efb1035888ae4.bindTooltip(
+                `<div>
+                     Site: Canaan Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_9b1a988f6ccd3c70595d59800024ffe2 = L.circleMarker(
+                [3.14602, 35.78085],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_ef9b10c7a6b1540b9cc5e569e76ce4da = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ad44f8e0a0537619f5fb78eb7e2eac12 = $(`<div id="html_ad44f8e0a0537619f5fb78eb7e2eac12" style="width: 100.0%; height: 100.0%;"><b>Natirnalulung Bh</b><br>Fluoride: 0.5 mg/L<br>pH: 7.95<br>EC: 273.0 µS/cm</div>`)[0];
+                popup_ef9b10c7a6b1540b9cc5e569e76ce4da.setContent(html_ad44f8e0a0537619f5fb78eb7e2eac12);
+            
+        
+
+        circle_marker_9b1a988f6ccd3c70595d59800024ffe2.bindPopup(popup_ef9b10c7a6b1540b9cc5e569e76ce4da)
+        ;
+
+        
+    
+    
+            circle_marker_9b1a988f6ccd3c70595d59800024ffe2.bindTooltip(
+                `<div>
+                     Site: Natirnalulung Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_aa8c74dfbd9872cb753b1c6e1ce16970 = L.circleMarker(
+                [3.15254, 35.75828],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_e853eb3bf9da2d9b2387b5dfeec189e4 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_e5866e5569e5731bb9f346985c76ab5b = $(`<div id="html_e5866e5569e5731bb9f346985c76ab5b" style="width: 100.0%; height: 100.0%;"><b>Bh 3</b><br>Fluoride: 0.34 mg/L<br>pH: 8.0<br>EC: 228.0 µS/cm</div>`)[0];
+                popup_e853eb3bf9da2d9b2387b5dfeec189e4.setContent(html_e5866e5569e5731bb9f346985c76ab5b);
+            
+        
+
+        circle_marker_aa8c74dfbd9872cb753b1c6e1ce16970.bindPopup(popup_e853eb3bf9da2d9b2387b5dfeec189e4)
+        ;
+
+        
+    
+    
+            circle_marker_aa8c74dfbd9872cb753b1c6e1ce16970.bindTooltip(
+                `<div>
+                     Site: Bh 3
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_eb753537c2d1419a742c27b921011d49 = L.circleMarker(
+                [3.15267, 35.76781],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_4cce9c7065e4219dc8171f45843e853f = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_450677e728a9e5bb5872bc59a145121f = $(`<div id="html_450677e728a9e5bb5872bc59a145121f" style="width: 100.0%; height: 100.0%;"><b>Nareng'elup 2</b><br>Fluoride: 0.77 mg/L<br>pH: 8.11<br>EC: 1051.0 µS/cm</div>`)[0];
+                popup_4cce9c7065e4219dc8171f45843e853f.setContent(html_450677e728a9e5bb5872bc59a145121f);
+            
+        
+
+        circle_marker_eb753537c2d1419a742c27b921011d49.bindPopup(popup_4cce9c7065e4219dc8171f45843e853f)
+        ;
+
+        
+    
+    
+            circle_marker_eb753537c2d1419a742c27b921011d49.bindTooltip(
+                `<div>
+                     Site: Nareng'elup 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_73f78895c683f6391e297182a28ae315 = L.circleMarker(
+                [3.16891, 35.69344],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_a052e28aca1c996e57c4e9da08191106 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_1e270e611049365fc556a9101d763140 = $(`<div id="html_1e270e611049365fc556a9101d763140" style="width: 100.0%; height: 100.0%;"><b>Nakoporor Hp</b><br>Fluoride: 1.12 mg/L<br>pH: 8.05<br>EC: 405.0 µS/cm</div>`)[0];
+                popup_a052e28aca1c996e57c4e9da08191106.setContent(html_1e270e611049365fc556a9101d763140);
+            
+        
+
+        circle_marker_73f78895c683f6391e297182a28ae315.bindPopup(popup_a052e28aca1c996e57c4e9da08191106)
+        ;
+
+        
+    
+    
+            circle_marker_73f78895c683f6391e297182a28ae315.bindTooltip(
+                `<div>
+                     Site: Nakoporor Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_7ca1326fb5aaa74d3c3362ac7d3f5ca6 = L.circleMarker(
+                [3.17916, 35.70037],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_d7d675ee1f22a116679ece71c76b4607 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_4b02d68edd91089d211ea6842130bb6e = $(`<div id="html_4b02d68edd91089d211ea6842130bb6e" style="width: 100.0%; height: 100.0%;"><b>Naregai Bh</b><br>Fluoride: 0.22 mg/L<br>pH: 8.11<br>EC: 387.0 µS/cm</div>`)[0];
+                popup_d7d675ee1f22a116679ece71c76b4607.setContent(html_4b02d68edd91089d211ea6842130bb6e);
+            
+        
+
+        circle_marker_7ca1326fb5aaa74d3c3362ac7d3f5ca6.bindPopup(popup_d7d675ee1f22a116679ece71c76b4607)
+        ;
+
+        
+    
+    
+            circle_marker_7ca1326fb5aaa74d3c3362ac7d3f5ca6.bindTooltip(
+                `<div>
+                     Site: Naregai Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_472bc3cc1e03a8a908d8ace356ff68d1 = L.circleMarker(
+                [3.19181, 35.67553],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_01dd54171b5722118d00f6a8c043427c = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_712f0d0d46a0da7f7ac9287c335f4bd7 = $(`<div id="html_712f0d0d46a0da7f7ac9287c335f4bd7" style="width: 100.0%; height: 100.0%;"><b>Nasenyanait Hp 2</b><br>Fluoride: 0.63 mg/L<br>pH: 8.15<br>EC: 256.0 µS/cm</div>`)[0];
+                popup_01dd54171b5722118d00f6a8c043427c.setContent(html_712f0d0d46a0da7f7ac9287c335f4bd7);
+            
+        
+
+        circle_marker_472bc3cc1e03a8a908d8ace356ff68d1.bindPopup(popup_01dd54171b5722118d00f6a8c043427c)
+        ;
+
+        
+    
+    
+            circle_marker_472bc3cc1e03a8a908d8ace356ff68d1.bindTooltip(
+                `<div>
+                     Site: Nasenyanait Hp 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_812bfceb13bdb92292ce8e06d6920c5f = L.circleMarker(
+                [3.19907, 35.64366],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_6d7059f7d35c9cb9298999fef14cecbb = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_bb6ab96ec6b3177c03ece46eb73f81bc = $(`<div id="html_bb6ab96ec6b3177c03ece46eb73f81bc" style="width: 100.0%; height: 100.0%;"><b>Stagra  Hotel Bh</b><br>Fluoride: 2.54 mg/L<br>pH: 8.5<br>EC: 2730.0 µS/cm</div>`)[0];
+                popup_6d7059f7d35c9cb9298999fef14cecbb.setContent(html_bb6ab96ec6b3177c03ece46eb73f81bc);
+            
+        
+
+        circle_marker_812bfceb13bdb92292ce8e06d6920c5f.bindPopup(popup_6d7059f7d35c9cb9298999fef14cecbb)
+        ;
+
+        
+    
+    
+            circle_marker_812bfceb13bdb92292ce8e06d6920c5f.bindTooltip(
+                `<div>
+                     Site: Stagra  Hotel Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_2b4e51b40f5ad2448ab753e65316fec9 = L.circleMarker(
+                [3.11333, 35.60052],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_5ed32a4d28cdca4ee58771c49bd69535 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_392f6ce3fabd3079f2e3a6bf86bdf21e = $(`<div id="html_392f6ce3fabd3079f2e3a6bf86bdf21e" style="width: 100.0%; height: 100.0%;"><b>Nayuu HP4</b><br>Fluoride: 0.69 mg/L<br>pH: 8.41<br>EC: 813.0 µS/cm</div>`)[0];
+                popup_5ed32a4d28cdca4ee58771c49bd69535.setContent(html_392f6ce3fabd3079f2e3a6bf86bdf21e);
+            
+        
+
+        circle_marker_2b4e51b40f5ad2448ab753e65316fec9.bindPopup(popup_5ed32a4d28cdca4ee58771c49bd69535)
+        ;
+
+        
+    
+    
+            circle_marker_2b4e51b40f5ad2448ab753e65316fec9.bindTooltip(
+                `<div>
+                     Site: Nayuu HP4
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_2f830f18a951f3322e5246b739003205 = L.circleMarker(
+                [3.11781, 35.61761],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_ec1dfbd568e47cfa1e9516967e460dd8 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_3699e08f80ba491f77a5e417dfd5196f = $(`<div id="html_3699e08f80ba491f77a5e417dfd5196f" style="width: 100.0%; height: 100.0%;"><b>Naiwotorong Water Supply</b><br>Fluoride: 0.8 mg/L<br>pH: 8.25<br>EC: 625.0 µS/cm</div>`)[0];
+                popup_ec1dfbd568e47cfa1e9516967e460dd8.setContent(html_3699e08f80ba491f77a5e417dfd5196f);
+            
+        
+
+        circle_marker_2f830f18a951f3322e5246b739003205.bindPopup(popup_ec1dfbd568e47cfa1e9516967e460dd8)
+        ;
+
+        
+    
+    
+            circle_marker_2f830f18a951f3322e5246b739003205.bindTooltip(
+                `<div>
+                     Site: Naiwotorong Water Supply
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_4d6031972b587c93ed8c9e0a97971d13 = L.circleMarker(
+                [3.11856, 35.61158],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_20b779acc38ef091b6a44f67de688e36 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_4daaab099a8e14a0e226bd97ba5e0626 = $(`<div id="html_4daaab099a8e14a0e226bd97ba5e0626" style="width: 100.0%; height: 100.0%;"><b>Bh 7 </b><br>Fluoride: 0.33 mg/L<br>pH: 8.04<br>EC: 1857.0 µS/cm</div>`)[0];
+                popup_20b779acc38ef091b6a44f67de688e36.setContent(html_4daaab099a8e14a0e226bd97ba5e0626);
+            
+        
+
+        circle_marker_4d6031972b587c93ed8c9e0a97971d13.bindPopup(popup_20b779acc38ef091b6a44f67de688e36)
+        ;
+
+        
+    
+    
+            circle_marker_4d6031972b587c93ed8c9e0a97971d13.bindTooltip(
+                `<div>
+                     Site: Bh 7 
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_81effffd799bcda60dbc8228209af04e = L.circleMarker(
+                [3.11857, 35.61037],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_b619e391db47adacfc7864c0eda335f1 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_62e261e0d1f13e36b037e38ca83a6b0b = $(`<div id="html_62e261e0d1f13e36b037e38ca83a6b0b" style="width: 100.0%; height: 100.0%;"><b>Bh 5</b><br>Fluoride: 0.52 mg/L<br>pH: 8.15<br>EC: 249.0 µS/cm</div>`)[0];
+                popup_b619e391db47adacfc7864c0eda335f1.setContent(html_62e261e0d1f13e36b037e38ca83a6b0b);
+            
+        
+
+        circle_marker_81effffd799bcda60dbc8228209af04e.bindPopup(popup_b619e391db47adacfc7864c0eda335f1)
+        ;
+
+        
+    
+    
+            circle_marker_81effffd799bcda60dbc8228209af04e.bindTooltip(
+                `<div>
+                     Site: Bh 5
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_70dfdb491a1affe320c6ccdf194a9549 = L.circleMarker(
+                [3.1206, 35.58293],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_b5ea2a70a18b1698965d1e9d49c7c407 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_ecc1560950c30a90f535f331134adc1c = $(`<div id="html_ecc1560950c30a90f535f331134adc1c" style="width: 100.0%; height: 100.0%;"><b>Nayuu-Katilo Hp</b><br>Fluoride: 0.63 mg/L<br>pH: 8.27<br>EC: 268.0 µS/cm</div>`)[0];
+                popup_b5ea2a70a18b1698965d1e9d49c7c407.setContent(html_ecc1560950c30a90f535f331134adc1c);
+            
+        
+
+        circle_marker_70dfdb491a1affe320c6ccdf194a9549.bindPopup(popup_b5ea2a70a18b1698965d1e9d49c7c407)
+        ;
+
+        
+    
+    
+            circle_marker_70dfdb491a1affe320c6ccdf194a9549.bindTooltip(
+                `<div>
+                     Site: Nayuu-Katilo Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_c95766a5c20948cc512a5b4cf023740c = L.circleMarker(
+                [3.12181, 35.59123],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_8254eac1255dd9ed7ac02d2f83915ae9 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_8cbaa2b7eaa6a04915df19fca96fb4e2 = $(`<div id="html_8cbaa2b7eaa6a04915df19fca96fb4e2" style="width: 100.0%; height: 100.0%;"><b>Nakadukui Bh</b><br>Fluoride: 0.86 mg/L<br>pH: 8.14<br>EC: 326.0 µS/cm</div>`)[0];
+                popup_8254eac1255dd9ed7ac02d2f83915ae9.setContent(html_8cbaa2b7eaa6a04915df19fca96fb4e2);
+            
+        
+
+        circle_marker_c95766a5c20948cc512a5b4cf023740c.bindPopup(popup_8254eac1255dd9ed7ac02d2f83915ae9)
+        ;
+
+        
+    
+    
+            circle_marker_c95766a5c20948cc512a5b4cf023740c.bindTooltip(
+                `<div>
+                     Site: Nakadukui Bh
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_461b7cbca607133bc04dada141620907 = L.circleMarker(
+                [3.12238, 35.62303],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_bd7ab48112e03872e55d56abf01cba38 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_9a788b3880d1eb2f6250d3db1fd63dcc = $(`<div id="html_9a788b3880d1eb2f6250d3db1fd63dcc" style="width: 100.0%; height: 100.0%;"><b>Nadapal Hp</b><br>Fluoride: 1.18 mg/L<br>pH: 8.15<br>EC: 392.0 µS/cm</div>`)[0];
+                popup_bd7ab48112e03872e55d56abf01cba38.setContent(html_9a788b3880d1eb2f6250d3db1fd63dcc);
+            
+        
+
+        circle_marker_461b7cbca607133bc04dada141620907.bindPopup(popup_bd7ab48112e03872e55d56abf01cba38)
+        ;
+
+        
+    
+    
+            circle_marker_461b7cbca607133bc04dada141620907.bindTooltip(
+                `<div>
+                     Site: Nadapal Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_3c8ea78281a927df7a7eceb8276b2f1f = L.circleMarker(
+                [3.13223, 35.63118],
+                {"bubblingMouseEvents": true, "color": "green", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "green", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_730bfa17dfd7fd285e2ea85893bbe657 = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_c87e4a7e1125023dc52d8532404829f6 = $(`<div id="html_c87e4a7e1125023dc52d8532404829f6" style="width: 100.0%; height: 100.0%;"><b>Lolupe 3 Hp</b><br>Fluoride: 1.16 mg/L<br>pH: 8.2<br>EC: 496.0 µS/cm</div>`)[0];
+                popup_730bfa17dfd7fd285e2ea85893bbe657.setContent(html_c87e4a7e1125023dc52d8532404829f6);
+            
+        
+
+        circle_marker_3c8ea78281a927df7a7eceb8276b2f1f.bindPopup(popup_730bfa17dfd7fd285e2ea85893bbe657)
+        ;
+
+        
+    
+    
+            circle_marker_3c8ea78281a927df7a7eceb8276b2f1f.bindTooltip(
+                `<div>
+                     Site: Lolupe 3 Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_76eab2e5344ba052bd81e9200de19483 = L.circleMarker(
+                [3.20932, 35.63983],
+                {"bubblingMouseEvents": true, "color": "red", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "red", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_c6a9a9c438ef4028a11876d98d78cb6d = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_18b16d5cd96d5d829fb5099811af39c2 = $(`<div id="html_18b16d5cd96d5d829fb5099811af39c2" style="width: 100.0%; height: 100.0%;"><b>Talent High Sch Hp</b><br>Fluoride: 9.6 mg/L<br>pH: 8.56<br>EC: 5600.0 µS/cm</div>`)[0];
+                popup_c6a9a9c438ef4028a11876d98d78cb6d.setContent(html_18b16d5cd96d5d829fb5099811af39c2);
+            
+        
+
+        circle_marker_76eab2e5344ba052bd81e9200de19483.bindPopup(popup_c6a9a9c438ef4028a11876d98d78cb6d)
+        ;
+
+        
+    
+    
+            circle_marker_76eab2e5344ba052bd81e9200de19483.bindTooltip(
+                `<div>
+                     Site: Talent High Sch Hp
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var circle_marker_44df1df235e1c7400c6081901fcbd96d = L.circleMarker(
+                [3.23786, 35.63011],
+                {"bubblingMouseEvents": true, "color": "orange", "dashArray": null, "dashOffset": null, "fill": true, "fillColor": "orange", "fillOpacity": 0.7, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "opacity": 1.0, "radius": 7, "stroke": true, "weight": 3}
+            ).addTo(map_71750e3d3de51167c503799d60cfabc5);
+        
+    
+        var popup_18519dbf370d8924f4f5fd9dfdcfb90e = L.popup({"maxWidth": 200});
+
+        
+            
+                var html_1beb61440197d5418416af5c83c3903c = $(`<div id="html_1beb61440197d5418416af5c83c3903c" style="width: 100.0%; height: 100.0%;"><b>Naotin Bh 2</b><br>Fluoride: 2.38 mg/L<br>pH: 8.38<br>EC: 884.0 µS/cm</div>`)[0];
+                popup_18519dbf370d8924f4f5fd9dfdcfb90e.setContent(html_1beb61440197d5418416af5c83c3903c);
+            
+        
+
+        circle_marker_44df1df235e1c7400c6081901fcbd96d.bindPopup(popup_18519dbf370d8924f4f5fd9dfdcfb90e)
+        ;
+
+        
+    
+    
+            circle_marker_44df1df235e1c7400c6081901fcbd96d.bindTooltip(
+                `<div>
+                     Site: Naotin Bh 2
+                 </div>`,
+                {"sticky": true}
+            );
+        
+    
+            var measure_control_211cff50e31c2efc6ad00a8734383a6a = new L.Control.Measure(
+                {"position": "topright", "primaryAreaUnit": "sqmeters", "primaryLengthUnit": "kilometers", "secondaryAreaUnit": "acres", "secondaryLengthUnit": "meters"});
+            map_71750e3d3de51167c503799d60cfabc5.addControl(measure_control_211cff50e31c2efc6ad00a8734383a6a);
+
+        
+</script>
+</html>
